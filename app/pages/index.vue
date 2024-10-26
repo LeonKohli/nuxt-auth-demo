@@ -29,13 +29,17 @@ const { user, loggedIn, clear } = useUserSession()
                 <p>Welcome back to your personalized dashboard.</p>
               </div>
               <div class="mt-5">
-                <UButton @click="clear" color="red" variant="soft">Logout</UButton>
+                <button @click="clear" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                  Logout
+                </button>
               </div>
             </div>
           </div>
         </div>
         <div v-else class="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-1 sm:gap-5">
-          <UButton to="/login" color="indigo">Login to Get Started</UButton>
+          <NuxtLink to="/login" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Login to Get Started
+          </NuxtLink>
         </div>
       </div>
     </div>

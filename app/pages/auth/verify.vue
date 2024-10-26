@@ -4,18 +4,16 @@
 const route = useRoute()
 const email = route.query.email as string
 
-const state = reactive<{ otp: string }>({ otp: '' })
+const otp = ref('')
 const error = ref('')
 
-const form = ref<HTMLFormElement | null>(null)
-
-const send = async ({ data }: { data: { otp: string } }) => {
+const send = async () => {
   try {
     const response = await $fetch<{ success: boolean; error?: string }>('/api/auth/verify/otp', {
       method: 'POST',
       body: {
         email,
-        otp: data.otp,
+        otp: otp.value,
       },
     })
 
@@ -39,28 +37,22 @@ const send = async ({ data }: { data: { otp: string } }) => {
 </script>
 
 <template>
-  <UForm
-    ref="form"
-    :state="state"
-    class="space-y-4 max-w-2xl"
-    @submit="send"
-  >
-    <UFormGroup
-      label="One-time password"
-      name="otp"
-    >
-      <UInput
-        v-model="state.otp"
-        size="xl"
+  <form @submit.prevent="send" class="space-y-4 max-w-2xl">
+    <div>
+      <label for="otp" class="block text-sm font-medium text-gray-700">One-time password</label>
+      <input
+        id="otp"
+        v-model="otp"
+        type="text"
         maxlength="6"
-        :ui="{ base: 'text-center tracking-[0.75em]' }"
+        class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center tracking-[0.75em]"
       />
-    </UFormGroup>
+    </div>
     <div v-if="error" class="text-red-600 text-sm">{{ error }}</div>
     <div class="text-center">
-      <UButton type="submit">
+      <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         Login
-      </UButton>
+      </button>
     </div>
-  </UForm>
+  </form>
 </template>
