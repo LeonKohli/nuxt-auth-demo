@@ -56,10 +56,7 @@ const send = async () => {
   <div class="flex items-center justify-center min-h-screen px-4 py-12 bg-background text-foreground sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">
       <div>
-        <h2 class="mt-6 text-3xl font-extrabold text-center">Sign in to your account</h2>
-        <p class="mt-2 text-sm text-center text-muted-foreground">
-          Or start your 14-day free trial
-        </p>
+        <h2 class="mt-6 text-3xl font-extrabold text-center">Welcome back</h2>
       </div>
       <form @submit.prevent="send" class="mt-8 space-y-6">
         <div class="-space-y-px rounded-md shadow-sm">
@@ -74,11 +71,9 @@ const send = async () => {
         <div v-if="error" class="text-sm text-center text-destructive">{{ error }}</div>
 
         <div>
-          <Button type="submit"
-            class="relative flex justify-center w-full px-4 py-2">
+          <Button type="submit" variant="outline" class="relative flex justify-center w-full">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <Icon name="uil:envelope" class="w-5 h-5"
-                aria-hidden="true" />
+              <Icon name="uil:envelope" class="w-5 h-5" aria-hidden="true" />
             </span>
             Send Magic Link
           </Button>
@@ -96,14 +91,16 @@ const send = async () => {
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-6">
-          <div v-for="provider in providers" :key="provider.label">
-            <Button @click="provider.click" :class="[
-              'w-full inline-flex justify-center py-2 px-4'
-            ]">
-              <Icon :name="provider.icon" class="w-5 h-5" />
-              <span class="ml-2">{{ provider.label }}</span>
-            </Button>
-          </div>
+          <Button 
+            v-for="provider in providers" 
+            :key="provider.label"
+            @click="provider.click" 
+            variant="outline"
+            class="justify-center"
+          >
+            <Icon :name="provider.icon" class="w-5 h-5 mr-2" />
+            {{ provider.label }}
+          </Button>
         </div>
       </div>
     </div>

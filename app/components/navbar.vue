@@ -139,34 +139,37 @@ const isMobileMenuOpen = ref(false)
             Logout
           </Button>
         </div>
-        <Sheet v-model:open="isMobileMenuOpen">
-          <SheetTrigger class="md:hidden">
-            <Button variant="outline" size="icon">
-              <Icon name="uil:bars" class="w-4 h-4" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" class="w-[300px] sm:w-[400px]">
-            <nav class="flex flex-col mt-4">
-              <NuxtLink to="/" class="py-2 text-lg" @click="isMobileMenuOpen = false">Home</NuxtLink>
-              <template v-if="loggedIn">
-                <NuxtLink v-for="component in userComponents" :key="component.title" :to="component.href" class="py-2 text-lg" @click="isMobileMenuOpen = false">
-                  {{ component.title }}
-                </NuxtLink>
-                <template v-if="user?.role === 'ADMIN'">
-                  <NuxtLink v-for="component in adminComponents" :key="component.title" :to="component.href" class="py-2 text-lg" @click="isMobileMenuOpen = false">
+        <ClientOnly>
+          <Sheet v-model:open="isMobileMenuOpen">
+            <SheetTrigger class="md:hidden">
+              <Button variant="outline" size="icon">
+                <Icon name="uil:bars" class="w-4 h-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" class="w-[300px] sm:w-[400px]">
+              <SheetTitle class="sr-only">Mobile Navigation Menu</SheetTitle>
+              <nav class="flex flex-col mt-4">
+                <NuxtLink to="/" class="py-2 text-lg" @click="isMobileMenuOpen = false">Home</NuxtLink>
+                <template v-if="loggedIn">
+                  <NuxtLink v-for="component in userComponents" :key="component.title" :to="component.href" class="py-2 text-lg" @click="isMobileMenuOpen = false">
                     {{ component.title }}
                   </NuxtLink>
+                  <template v-if="user?.role === 'ADMIN'">
+                    <NuxtLink v-for="component in adminComponents" :key="component.title" :to="component.href" class="py-2 text-lg" @click="isMobileMenuOpen = false">
+                      {{ component.title }}
+                    </NuxtLink>
+                  </template>
+                  <Button variant="outline" @click="handleLogout" class="mt-4">Logout</Button>
                 </template>
-                <Button variant="outline" @click="handleLogout" class="mt-4">Logout</Button>
-              </template>
-              <template v-else>
-                <Button variant="outline" asChild class="mt-4">
-                  <NuxtLink to="/login" @click="isMobileMenuOpen = false">Login</NuxtLink>
-                </Button>
-              </template>
-            </nav>
-          </SheetContent>
-        </Sheet>
+                <template v-else>
+                  <Button variant="outline" asChild class="mt-4">
+                    <NuxtLink to="/login" @click="isMobileMenuOpen = false">Login</NuxtLink>
+                  </Button>
+                </template>
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </ClientOnly>
       </div>
     </div>
   </header>
