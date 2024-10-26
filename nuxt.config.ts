@@ -22,7 +22,23 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['nuxt-auth-utils', '@nuxt/ui', 'nuxt-resend', '@nuxt/icon'],
+  modules: [
+    'nuxt-auth-utils',
+    'nuxt-resend',
+    '@nuxt/icon',
+    '@nuxtjs/tailwindcss',
+    'shadcn-nuxt',
+    '@nuxtjs/color-mode'
+  ],
+  colorMode: {
+    classPrefix: '',
+    classSuffix: ''
+  },
+
+  shadcn: {
+    prefix: '',
+    componentDir: './app/components/ui'
+  },
 
   typescript: {
     strict: false

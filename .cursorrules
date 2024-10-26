@@ -36,3 +36,5 @@ TypeScript Usage
 UI and Styling
 - Use Tailwind CSS for components and styling.
 - Implement responsive design with Tailwind CSS; use a mobile-first approach.
+- Use the shadcn/ui library for Vue when implementing shadcn components.
+- When using shadcn components, do not overwrite the style for background color and text color to maintain consistency.

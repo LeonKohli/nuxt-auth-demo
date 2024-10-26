@@ -37,7 +37,7 @@ const send = async () => {
 </script>
 
 <template>
-  <form @submit.prevent="send" class="space-y-4 max-w-2xl">
+  <form @submit.prevent="send" class="max-w-2xl space-y-4">
     <div>
       <label for="otp" class="block text-sm font-medium text-gray-700">One-time password</label>
       <input
@@ -48,11 +48,11 @@ const send = async () => {
         class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center tracking-[0.75em]"
       />
     </div>
-    <div v-if="error" class="text-red-600 text-sm">{{ error }}</div>
+    <div v-if="error" class="text-sm text-red-600">{{ error }}</div>
     <div class="text-center">
-      <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <Button type="submit" class="w-full">
         Login
-      </button>
+      </Button>
     </div>
   </form>
 </template>

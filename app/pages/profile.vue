@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { Button } from '@/components/ui/button'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+
 definePageMeta({
   middleware: ['auth']
 })
@@ -36,94 +41,103 @@ const handleRoleChange = async (newRole: 'USER' | 'ADMIN') => {
     // Handle error (e.g., show error message to user)
   }
 }
+
+const getRoleBadgeClass = (role: string) => {
+  switch (role) {
+    case 'ADMIN':
+      return 'bg-destructive text-destructive-foreground'
+    case 'USER':
+      return 'bg-primary text-primary-foreground'
+    default:
+      return 'bg-secondary text-secondary-foreground'
+  }
+}
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <div class="px-4 py-6 sm:px-0">
-      <h1 class="text-3xl font-bold text-gray-900 mb-6">User Profile</h1>
+  <div class="max-w-3xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
+    <h1 class="mb-8 text-3xl font-bold">User Profile</h1>
 
-      <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">Personal Information</h3>
-        </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-          <dl class="sm:divide-y sm:divide-gray-200">
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">Full name</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user?.name || 'N/A' }}</dd>
-            </div>
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">Email address</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user?.email || 'N/A' }}</dd>
-            </div>
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">Role</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user?.role || 'N/A' }}</dd>
-            </div>
-            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">User ID</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user?.userId || 'N/A' }}</dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-
-      <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">Connected OAuth Accounts</h3>
-        </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-          <ul v-if="connectedAccounts.length > 0" class="divide-y divide-gray-200">
-            <li v-for="account in connectedAccounts" :key="account"
-              class="py-4 flex items-center justify-between sm:px-6">
-              <div class="flex items-center">
-                <Icon :name="getAccountIcon(account)" class="h-6 w-6 text-gray-600" />
-                <span class="ml-3 text-sm font-medium text-gray-900">{{ account }}</span>
-              </div>
-              <span class="ml-2 flex-shrink-0">
-                <span
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Connected</span>
-              </span>
-            </li>
-          </ul>
-          <p v-else class="text-sm text-gray-500 py-4 sm:px-6">No connected OAuth accounts</p>
-        </div>
-      </div>
-
-      <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">Debug Information</h3>
-        </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-          <pre class="text-sm text-gray-700 p-4 sm:px-6 overflow-x-auto">{{ JSON.stringify(user, null, 2) }}</pre>
-        </div>
-      </div>
-
-      <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">Role Management</h3>
-        </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-          <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Current Role</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user?.role }}</dd>
+    <Card class="mb-8">
+      <CardHeader>
+        <CardTitle class="text-2xl">Personal Information</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div class="flex items-center mb-6">
+          <Avatar class="w-16 h-16 mr-4">
+            <AvatarImage :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || '')}&background=random`" :alt="user?.name" />
+            <AvatarFallback>{{ user?.name?.charAt(0) || 'U' }}</AvatarFallback>
+          </Avatar>
+          <div>
+            <h2 class="text-xl font-semibold">{{ user?.name || 'N/A' }}</h2>
+            <p class="text-muted-foreground">{{ user?.email || 'N/A' }}</p>
           </div>
-          <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Change Role</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              <button @click="handleRoleChange('USER')"
-                class="mr-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                Set as User
-              </button>
-              <button @click="handleRoleChange('ADMIN')"
-                class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-                Set as Admin
-              </button>
+        </div>
+        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <dt class="font-medium text-muted-foreground">Role</dt>
+            <dd>
+              <Badge :class="getRoleBadgeClass(user?.role)">
+                {{ user?.role || 'N/A' }}
+              </Badge>
             </dd>
           </div>
+          <div>
+            <dt class="font-medium text-muted-foreground">User ID</dt>
+            <dd>{{ user?.userId || 'N/A' }}</dd>
+          </div>
+        </dl>
+      </CardContent>
+    </Card>
+
+    <Card class="mb-8">
+      <CardHeader>
+        <CardTitle class="text-2xl">Connected Accounts</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul v-if="connectedAccounts.length > 0" class="space-y-3">
+          <li v-for="account in connectedAccounts" :key="account"
+            class="flex items-center justify-between p-3 rounded-md bg-muted">
+            <div class="flex items-center">
+              <Icon :name="getAccountIcon(account)" class="w-6 h-6 mr-3" />
+              <span class="font-medium">{{ account }}</span>
+            </div>
+            <Badge variant="secondary">Connected</Badge>
+          </li>
+        </ul>
+        <p v-else class="text-muted-foreground">No connected accounts</p>
+      </CardContent>
+    </Card>
+
+    <Card class="mb-8">
+      <CardHeader>
+        <CardTitle class="text-2xl">Role Management</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="font-medium">Current Role</span>
+            <Badge :class="getRoleBadgeClass(user?.role)">{{ user?.role }}</Badge>
+          </div>
+          <div class="flex justify-end space-x-3">
+            <Button @click="handleRoleChange('USER')" variant="outline" size="sm">
+              Set as User
+            </Button>
+            <Button @click="handleRoleChange('ADMIN')" variant="outline" size="sm">
+              Set as Admin
+            </Button>
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardHeader>
+        <CardTitle class="text-2xl">Debug Information</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <pre class="p-4 overflow-x-auto text-sm rounded-md bg-muted">{{ JSON.stringify(user, null, 2) }}</pre>
+      </CardContent>
+    </Card>
   </div>
 </template>

@@ -1,6 +1,8 @@
-// File: app/pages/admin.vue
-
 <script setup lang="ts">
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
+
 definePageMeta({
   middleware: ['auth', 'admin']
 })
@@ -9,9 +11,9 @@ definePageMeta({
 const { data: users } = await useFetch('/api/users')
 
 const userRoleColors = {
-  ADMIN: 'bg-red-100 text-red-800',
-  USER: 'bg-green-100 text-green-800',
-  default: 'bg-gray-100 text-gray-800'
+  ADMIN: 'bg-destructive text-destructive-foreground',
+  USER: 'bg-primary text-primary-foreground',
+  default: 'bg-secondary text-secondary-foreground'
 }
 
 const getUserRoleColor = (role: string) => {
@@ -20,45 +22,55 @@ const getUserRoleColor = (role: string) => {
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <div class="px-4 py-6 sm:px-0">
-      <h1 class="text-3xl font-bold text-gray-900 mb-6">Admin Dashboard</h1>
+  <div class="max-w-3xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
+    <h1 class="mb-8 text-3xl font-bold">Admin Dashboard</h1>
 
-      <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">User List</h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-500">Detailed information about all users.</p>
-        </div>
-        <div class="border-t border-gray-200">
-          <ul class="divide-y divide-gray-200">
-            <li v-for="user in users" :key="user.id" class="px-4 py-4 sm:px-6">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  <div class="flex-shrink-0 h-10 w-10">
-                    <img class="h-10 w-10 rounded-full"
-                      :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`"
-                      :alt="user.name">
-                  </div>
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      {{ user.name }}
-                    </div>
-                    <div class="text-sm text-gray-500">
-                      {{ user.email }}
-                    </div>
-                  </div>
-                </div>
-                <div class="ml-2 flex-shrink-0">
-                  <span
-                    :class="[getUserRoleColor(user.role), 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full']">
-                    {{ user.role }}
-                  </span>
+    <Card class="mb-8">
+      <CardHeader>
+        <CardTitle class="text-2xl">User Management</CardTitle>
+        <CardDescription>View all users in the system</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ul class="space-y-6">
+          <li v-for="user in users" :key="user.id" class="p-4 transition-colors rounded-md hover:bg-muted">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <Avatar class="w-12 h-12 mr-4">
+                  <AvatarImage :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`" :alt="user.name" />
+                  <AvatarFallback>{{ user.name.charAt(0) }}</AvatarFallback>
+                </Avatar>
+                <div>
+                  <h2 class="text-lg font-semibold">{{ user.name }}</h2>
+                  <p class="text-sm text-muted-foreground">{{ user.email }}</p>
                 </div>
               </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+              <div class="flex items-center">
+                <Badge :class="getUserRoleColor(user.role)">
+                  {{ user.role }}
+                </Badge>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardHeader>
+        <CardTitle class="text-2xl">System Statistics</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <dt class="font-medium text-muted-foreground">Total Users</dt>
+            <dd class="text-2xl font-semibold">{{ users?.length || 0 }}</dd>
+          </div>
+          <div>
+            <dt class="font-medium text-muted-foreground">Admins</dt>
+            <dd class="text-2xl font-semibold">{{ users?.filter(u => u.role === 'ADMIN').length || 0 }}</dd>
+          </div>
+        </dl>
+      </CardContent>
+    </Card>
   </div>
 </template>
