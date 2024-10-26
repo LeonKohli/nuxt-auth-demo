@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['nuxt-auth-utils', '@nuxt/ui', 'nuxt-resend'],
+  modules: ['nuxt-auth-utils', '@nuxt/ui', 'nuxt-resend', '@nuxt/icon'],
 
   typescript: {
     strict: false

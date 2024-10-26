@@ -37,9 +37,13 @@ export default defineEventHandler(async (event) => {
 
     await setUserSession(event, {
       user: {
-        name: user.name,
-        email: user.email,
-        role: user.role,
+        id: user.id,
+        name: user.name ?? '',
+        email: user.email ?? '',
+        role: user.role as 'USER' | 'ADMIN',
+        userId: user.id,
+        googleId: user.googleId ?? undefined,
+        githubId: user.githubId ?? undefined,
       },
       loggedInAt: new Date(),
     })

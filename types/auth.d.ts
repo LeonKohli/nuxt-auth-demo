@@ -8,6 +8,8 @@ declare module '#auth-utils' {
     email: string;
     role: 'USER' | 'ADMIN';
     userId: string;
+    googleId?: string;
+    githubId?: string;
   }
 
   interface UserSession {
@@ -21,4 +23,4 @@ declare module '#auth-utils' {
   }
 }
 
-export {}
+export { }

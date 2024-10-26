@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/icon": "^1.5.6",
     "@nuxt/ui": "^2.18.7",
     "@prisma/client": "5.21.1",
     "nuxt": "^3.13.2",

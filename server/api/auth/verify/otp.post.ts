@@ -1,3 +1,5 @@
+// File: server/api/auth/verify/otp.post.ts
+
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event)
@@ -52,10 +54,14 @@ export default defineEventHandler(async (event) => {
     await setUserSession(event, {
       user: {
         id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
+        name: user.name ?? '',
+        email: user.email ?? '',
+        role: user.role as 'USER' | 'ADMIN',
+        userId: user.id,
+        googleId: user.googleId ?? undefined,
+        githubId: user.githubId ?? undefined,
       },
+      loggedInAt: new Date(),
     })
 
     console.log('OTP verification successful for user:', user.id)

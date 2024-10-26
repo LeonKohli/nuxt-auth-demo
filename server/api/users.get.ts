@@ -1,3 +1,5 @@
+// File: server/api/users.get.ts
+
 export default defineEventHandler(async (event) => {
   const session = await getUserSession(event)
 
