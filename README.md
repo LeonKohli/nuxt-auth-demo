@@ -135,8 +135,8 @@ bun run dev
 
 ## API Routes
 
-- `/api/auth/github` - GitHub OAuth handler
-- `/api/auth/google` - Google OAuth handler
+- `/auth/github` - GitHub OAuth handler
+- `/auth/google` - Google OAuth handler
 - `/api/auth/email/login` - Magic link authentication
 - `/api/auth/verify/otp` - OTP verification
 - `/api/user/change-role` - Role management
