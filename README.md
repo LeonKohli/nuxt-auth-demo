@@ -7,6 +7,20 @@ A full-featured authentication demo application built with Nuxt 3, showcasing OA
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg?style=flat&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC.svg?style=flat&logo=tailwind-css)
 
+<table>
+<tr>
+<td width="50%">
+<img src="https://github.com/user-attachments/assets/83c2c4b8-21d6-48be-9a4c-e074b9ee426e" alt="Login Screen" />
+</td>
+<td width="50%">
+<img src="https://github.com/user-attachments/assets/e17bbfa0-74db-4ec2-aafc-3068b0c0b870" alt="Dashboard" />
+</td>
+</tr>
+<tr>
+<td align="center"><strong>Login Screen</strong></td>
+<td align="center"><strong>Dashboard</strong></td>
+</tr>
+</table>
 ## Features
 
 - 🔐 Multiple authentication methods:
