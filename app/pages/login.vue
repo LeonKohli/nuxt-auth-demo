@@ -1,17 +1,15 @@
-// File: app/pages/login.vue
-
 <script setup lang="ts">
 const providers = [
   {
     label: 'GitHub',
-    icon: 'uil:github',
+    icon: 'simple-icons:github',
     click: async () => {
       await navigateTo('/auth/github', { external: true })
     },
   },
   {
     label: 'Google',
-    icon: 'uil:google',
+    icon: 'logos:google-icon',
     click: async () => {
       await navigateTo('/auth/google', { external: true })
     },
@@ -63,8 +61,7 @@ const send = async () => {
           <div>
             <label for="email-address" class="sr-only">Email address</label>
             <Input id="email-address" v-model="email" name="email" type="email" autocomplete="email" required
-              class="relative block w-full px-3 py-2"
-              placeholder="Email address"/>
+              class="relative block w-full px-3 py-2" placeholder="Email address" />
           </div>
         </div>
 
@@ -91,13 +88,8 @@ const send = async () => {
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-6">
-          <Button 
-            v-for="provider in providers" 
-            :key="provider.label"
-            @click="provider.click" 
-            variant="outline"
-            class="justify-center"
-          >
+          <Button v-for="provider in providers" :key="provider.label" @click="provider.click" variant="outline"
+            class="justify-center">
             <Icon :name="provider.icon" class="w-5 h-5 mr-2" />
             {{ provider.label }}
           </Button>

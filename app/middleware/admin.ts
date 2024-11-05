@@ -1,5 +1,3 @@
-// File: middleware/admin.ts
-
 export default defineNuxtRouteMiddleware((to, from) => {
   const { user, loggedIn } = useUserSession()
 

@@ -1,5 +1,3 @@
-// File: middleware/auth.ts
-
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const { loggedIn } = useUserSession()
 
