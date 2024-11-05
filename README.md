@@ -1,75 +1,128 @@
-# Nuxt Minimal Starter
+# Nuxt Auth Utils Demo
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A full-featured authentication demo application built with Nuxt 3, showcasing OAuth integration, email magic links, role-based access control, and a modern UI using shadcn-vue components.
 
-## Setup
+![Nuxt Version](https://img.shields.io/badge/Nuxt-3.x-00DC82.svg?style=flat&logo=nuxt.js)
+![Vue Version](https://img.shields.io/badge/Vue-3.x-4FC08D.svg?style=flat&logo=vue.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg?style=flat&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC.svg?style=flat&logo=tailwind-css)
 
-Make sure to install dependencies:
+## Features
+
+- 🔐 Multiple authentication methods:
+  - OAuth (GitHub & Google)
+  - Magic link email authentication
+  - OTP (One-Time Password) verification
+- 👥 Role-based access control (User/Admin)
+- 🎨 Modern UI with shadcn-vue components
+- 🌓 Dark/Light mode support
+- 📱 Responsive design
+- 🔄 Session management and refresh
+- 🛡️ Protected routes with middleware
+- 🗄️ PostgreSQL database with Prisma ORM
+
+## Tech Stack
+
+- **Framework**: Nuxt 3
+- **Authentication**: nuxt-auth-utils
+- **Database**: PostgreSQL + Prisma
+- **UI Components**: shadcn-vue
+- **Styling**: Tailwind CSS
+- **Email Service**: Resend
+- **Icons**: Nuxt Icon
+
+## Prerequisites
+
+- Node.js 18.x or higher
+- PostgreSQL database
+- GitHub OAuth application
+- Google OAuth application
+- Resend API key
+
+## Environment Variables
+
+Create a `.env` file in the root directory:
 
 ```bash
-# npm
-npm install
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
 
-# pnpm
-pnpm install
+# OAuth
+NUXT_SESSION_PASSWORD="your_session_password"
+GITHUB_CLIENT_ID="your_github_client_id"
+GITHUB_CLIENT_SECRET="your_github_client_secret"
+GOOGLE_CLIENT_ID="your_google_client_id"
+GOOGLE_CLIENT_SECRET="your_google_client_secret"
 
-# yarn
-yarn install
+# Email
+NUXT_RESEND_API_KEY="your_resend_api_key"
+```
 
-# bun
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/nuxt-auth-utils-demo.git
+cd nuxt-auth-utils-demo
+```
+
+2. Install dependencies:
+```bash
 bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
+3. Set up the database:
 ```bash
-# npm
-npm run dev
+bun prisma generate
+bun prisma db push
+```
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
+4. Start the development server:
+```bash
 bun run dev
 ```
 
-## Production
 
-Build the application for production:
+## Features in Detail
 
-```bash
-# npm
-npm run build
+### Authentication Flow
 
-# pnpm
-pnpm build
+1. **OAuth Authentication**
+   - Supports GitHub and Google OAuth providers
+   - Automatically creates or updates user accounts
+   - Handles email verification status
 
-# yarn
-yarn build
+2. **Magic Link Authentication**
+   - Sends secure login links via email
+   - Includes OTP (One-Time Password) as backup
+   - 4-hour expiration on verification tokens
 
-# bun
-bun run build
-```
+3. **Role-Based Access**
+   - User and Admin role support
+   - Protected routes using middleware
+   - Role-specific UI components and navigation
 
-Locally preview production build:
+### User Interface
 
-```bash
-# npm
-npm run preview
+1. **Navigation**
+   - Responsive navigation menu
+   - Role-based menu items
+   - Mobile-friendly drawer menu
 
-# pnpm
-pnpm preview
+2. **Theme Support**
+   - Light/Dark mode toggle
+   - System preference detection
+   - Persistent theme selection
 
-# yarn
-yarn preview
+3. **Components**
+   - Shadcn-vue component library
+   - Custom avatar components
+   - Responsive cards and layouts
 
-# bun
-bun run preview
-```
+## API Routes
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- `/api/auth/github` - GitHub OAuth handler
+- `/api/auth/google` - Google OAuth handler
+- `/api/auth/email/login` - Magic link authentication
+- `/api/auth/verify/otp` - OTP verification
+- `/api/user/change-role` - Role management
