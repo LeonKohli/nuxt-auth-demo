@@ -28,7 +28,8 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    'nuxt-security'
   ],
   colorMode: {
     classPrefix: '',
@@ -42,5 +43,13 @@ export default defineNuxtConfig({
 
   typescript: {
     strict: false
+  },
+
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'script-src': ["'self'", "'unsafe-eval'", "'unsafe-inline'", "https:"]
+      }
+    }
   }
 })
